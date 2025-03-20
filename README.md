@@ -1,12 +1,12 @@
 # laravel-boilerplate
-Laravel 10 project folder structure for the course Full-stack Development, part of the Professional Bachelor ICT study program.
+Laravel 11 project folder structure for the course Full-stack Development, part of the Professional Bachelor ICT study program.
 
 ## Links
 
 * [Course slides fsd-laravel](https://ikdoeict.gitlab.io/public/vakken/full-stack-development/workshops-laravel)
 * [PHP Documentation](https://www.php.net/docs.php)
-* [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
-* [Laravel 10 documentation](https://laravel.com/docs/10.x)
+* [MySQL 8.4 Reference Manual](https://dev.mysql.com/doc/refman/8.4/en/)
+* [Laravel 11 documentation](https://laravel.com/docs/11.x)
 
 ## Installing and developing your own project based on this boilerplate
 
@@ -39,16 +39,15 @@ docker-compose down
 ## Quick configuration of the Laravel project
 
 You still need to install the libraries in the vendor folder (because they are not on git) and do some basic configuration like generating the key, linking the storage &hellip;
-* Run from your terminal/cmd
+* Run from your terminal/cmd ```docker-compose exec -u 1000:1000 php-web bash```. Next you run following command in the web container:
 ```shell
-docker-compose exec -u 1000:1000 php-web bash
-$ cp .env.example .env
-$ composer install
-$ php artisan key:generate
-$ touch storage/logs/laravel.log
-$ chmod 777 -R storage bootstrap/cache
-$ php artisan storage:link
-$ exit
+cp .env.example .env
+composer install
+php artisan key:generate
+touch storage/logs/laravel.log
+chmod 777 -R storage bootstrap/cache
+php artisan storage:link
+exit
 ```
 
 
@@ -58,7 +57,11 @@ $ exit
 * Symptoms: web server or artisan has still errors when writing to file system
 * Run from your WLS2 Ubuntu terminal
 ```shell
-$ sudo chown yourname:yourname -R .
+sudo chown yourname:yourname -R .
+```
+* Run from your terminal/cmd ```docker-compose exec -u 1000:1000 php-web bash``` and re-run
+```shell
+chmod 777 -R storage bootstrap/cache
 ```
 
 ### <code>docker-compose up</code> does not start one or more containers
