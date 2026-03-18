@@ -1,12 +1,12 @@
 # laravel-boilerplate
-Laravel 11 project folder structure for the course Full-stack Development, part of the Professional Bachelor ICT study program.
+Laravel 12 project folder structure for the course Web Frameworks, part of the Professional Bachelor ICT study program.
 
 ## Links
 
-* [Course slides fsd-laravel](https://ikdoeict.gitlab.io/public/vakken/full-stack-development/workshops-laravel)
+* [Course slides wf-laravel](https://ikdoeict.gitlab.io/public/vakken/web-frameworks/workshops-laravel/)
 * [PHP Documentation](https://www.php.net/docs.php)
 * [MySQL 8.4 Reference Manual](https://dev.mysql.com/doc/refman/8.4/en/)
-* [Laravel 11 documentation](https://laravel.com/docs/11.x)
+* [Laravel 12 documentation](https://laravel.com/docs/12.x)
 
 ## Installing and developing your own project based on this boilerplate
 
@@ -16,7 +16,7 @@ Laravel 11 project folder structure for the course Full-stack Development, part 
 mkdir my-project
 cd my-project
 git init
-git pull https://gitlab.com/ikdoeict/public/vakken/full-stack-development/laravel-boilerplate.git
+git pull https://gitlab.com/ikdoeict/public/vakken/web-frameworks/laravel-boilerplate.git
 git remote add origin https://gitlab.com/ikdoeict/<your-name>/my-project.git
 git push -u origin master
 ```
