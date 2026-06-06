@@ -2,49 +2,63 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'date_of_birth',
         'email',
         'password',
+        'phone',
+        'profile_photo_url',
         'role',
+        'privacy_agreement',
+        'privacy_agreement_timestamp',
+        'account_status',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'privacy_agreement' => 'boolean',
+            'date_of_birth' => 'date',
+            'privacy_agreement_timestamp' => 'datetime',
         ];
+    }
+
+    public function getProfilePhotoUrlAttribute(?string $value): ?string
+    {
+        return $value ? Storage::disk('public')->url($value) : null;
+    }
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+    public function volunteer()
+    {
+        return $this->hasOne(Volunteer::class);
+    }
+
+    public function advisor()
+    {
+        return $this->hasOne(Advisor::class);
     }
 }
