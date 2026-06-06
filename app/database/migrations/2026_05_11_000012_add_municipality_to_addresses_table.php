@@ -6,20 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user')->after('password');
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->string('municipality', 100)->nullable()->after('postal_code');
         });
     }
 
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->dropColumn('municipality');
         });
     }
 };
