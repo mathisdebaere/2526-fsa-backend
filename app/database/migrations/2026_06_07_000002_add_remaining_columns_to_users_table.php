@@ -9,6 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            if (Schema::hasColumn('users', 'name')) {
+                $table->dropColumn('name');
+            }
             if (! Schema::hasColumn('users', 'date_of_birth')) {
                 $table->date('date_of_birth')->nullable()->after('last_name');
             }
@@ -36,6 +39,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('name')->after('id');
             $table->dropColumn([
                 'date_of_birth', 'phone', 'profile_photo_url',
                 'role', 'privacy_agreement', 'privacy_agreement_timestamp', 'account_status',
