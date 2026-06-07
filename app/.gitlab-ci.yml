@@ -1,0 +1,67 @@
+image: lorisleiva/laravel-docker:8.3
+
+stages:
+  - build
+  - lint
+  - test
+  - deploy
+
+cache:
+  key:
+    files:
+      - app/composer.lock
+  paths:
+    - app/vendor/
+
+composer:
+  stage: build
+  script:
+    - cd app
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+    - cp .env.example .env
+    - php artisan key:generate
+  artifacts:
+    paths:
+      - app/vendor/
+      - app/.env
+    expire_in: 1 hour
+
+pint:
+  stage: lint
+  needs:
+    - composer
+  script:
+    - cd app
+    - ./vendor/bin/pint --test
+
+unit_test:
+  stage: test
+  needs:
+    - composer
+  script:
+    - cd app
+    - php artisan test
+
+plesk:
+  stage: deploy
+  only:
+    - main
+  dependencies: []
+  variables:
+    PLESK_DIRECTORY: zilverenapi.mathisdebaere.ikdoeict.be
+  script:
+    - test -n "$SSH_USERNAME"
+    - test -n "$SSH_PRIVATE_KEY"
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'command -v rsync >/dev/null || ( apt-get update -y && apt-get install rsync -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - tr -d '\r' < "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+    - printf '\n' >> ~/.ssh/id_ed25519
+    - chmod 400 ~/.ssh/id_ed25519
+    - ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null
+    - ssh-add ~/.ssh/id_ed25519
+    - ssh -o StrictHostKeyChecking=no "$SSH_USERNAME@cloudplesk.ikdoeict.be" "mkdir -p '$PLESK_DIRECTORY'"
+    - rsync -az -e "ssh -o StrictHostKeyChecking=no" --delete --exclude='.env' --exclude='vendor/' --exclude='storage/' --exclude='bootstrap/cache/*.php' app/ "$SSH_USERNAME@cloudplesk.ikdoeict.be:$PLESK_DIRECTORY/"
+    - ssh -o StrictHostKeyChecking=no "$SSH_USERNAME@cloudplesk.ikdoeict.be" "export PATH=/opt/plesk/php/8.3/bin:\$PATH && cd '$PLESK_DIRECTORY' && composer install --no-dev --optimize-autoloader && php artisan migrate --force && php artisan optimize:clear && php artisan optimize"
