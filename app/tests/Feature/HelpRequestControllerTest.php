@@ -61,6 +61,7 @@ class HelpRequestControllerTest extends TestCase
         $response = $this->actingAs($this->clientUser, 'sanctum')->getJson('/api/help-requests');
         $response->assertForbidden();
     }
+
     public function test_a_client_with_active_subscription_can_store_a_help_request(): void
     {
         $this->giveClientActiveSubscription();
