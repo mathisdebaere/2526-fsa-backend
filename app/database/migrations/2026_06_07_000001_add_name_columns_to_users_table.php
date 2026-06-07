@@ -25,7 +25,7 @@ return new class extends Migration
                 $table->string('profile_photo_url', 255)->nullable()->after('phone');
             }
             if (! Schema::hasColumn('users', 'role')) {
-                $table->enum('role', ['volunteer', 'client', 'advisor'])->after('profile_photo_url');
+                $table->enum('role', ['volunteer', 'client', 'advisor'])->default('volunteer')->after('profile_photo_url');
             }
             if (! Schema::hasColumn('users', 'privacy_agreement')) {
                 $table->boolean('privacy_agreement')->default(false)->after('role');
