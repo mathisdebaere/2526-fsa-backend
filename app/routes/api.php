@@ -35,8 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Vrijwilligers
     Route::apiResource('volunteers', VolunteerController::class)->only(['index', 'show', 'update']);
     Route::get('volunteers/{volunteer}/reviews', [VolunteerController::class, 'reviews']);
+    Route::post('volunteers/{volunteer}/availabilities', [VolunteerController::class, 'addAvailability']);
     Route::middleware('volunteer')->group(function () {
-        Route::post('volunteers/{volunteer}/availabilities', [VolunteerController::class, 'addAvailability']);
         Route::put('volunteers/{volunteer}/categories', [VolunteerController::class, 'syncCategories']);
     });
     Route::delete('volunteers/{volunteer}/availabilities/{availabilityId}', [VolunteerController::class, 'deleteAvailability']);

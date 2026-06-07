@@ -84,7 +84,9 @@ class VolunteerController extends Controller
 
     public function addAvailability(Request $request, Volunteer $volunteer)
     {
-        if ($request->user()->volunteer->id !== $volunteer->id) {
+        $user = $request->user();
+
+        if ($user->role !== 'advisor' && $user->volunteer->id !== $volunteer->id) {
             return response()->json(['message' => 'Je kan enkel je eigen beschikbaarheden beheren'], 403);
         }
 
