@@ -56,6 +56,7 @@ class IntakeController extends Controller
         }
 
         $intake->update($data);
+
         return response()->json($intake->load(['user', 'advisor', 'appointment']));
     }
 }

@@ -20,13 +20,13 @@ class HelpRequestFactory extends Factory
     public function definition(): array
     {
         return [
-            'extra_notes'=> fake()->optional(0.6)->sentence(),
-            'region'=> fake()->randomElement(self::$municipalities),
-            'date'=> fake()->dateTimeBetween('now', '+6 months')->format('Y-m-d'),
-            'time'=> fake()->time('H:i'),
-            'status'=> fake()->randomElement(['open', 'open', 'open', 'matched', 'completed', 'cancelled']),
+            'extra_notes' => fake()->optional(0.6)->sentence(),
+            'region' => fake()->randomElement(self::$municipalities),
+            'date' => fake()->dateTimeBetween('now', '+6 months')->format('Y-m-d'),
+            'time' => fake()->time('H:i'),
+            'status' => fake()->randomElement(['open', 'open', 'open', 'matched', 'completed', 'cancelled']),
             'help_request_category_id' => HelpRequestCategory::factory(),
-            'client_id'=> Client::factory(),
+            'client_id' => Client::factory(),
         ];
     }
 }

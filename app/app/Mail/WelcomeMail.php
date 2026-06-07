@@ -18,9 +18,10 @@ class WelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Hey ' . $this->user->first_name . ', welkom bij FijneWijk!',
+            subject: 'Hey '.$this->user->first_name.', welkom bij FijneWijk!',
         );
     }
+
     public function content(): Content
     {
         return new Content(

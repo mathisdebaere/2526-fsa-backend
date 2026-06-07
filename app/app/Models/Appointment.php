@@ -25,10 +25,12 @@ class Appointment extends Model
             'date' => 'date',
         ];
     }
+
     public function volunteer()
     {
         return $this->belongsTo(Volunteer::class);
     }
+
     public function advisor()
     {
         return $this->belongsTo(Advisor::class);
@@ -43,8 +45,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(HelpRequest::class);
     }
+
     public function intake()
     {
-        return $this->hasOne(\App\Models\Intake::class);
+        return $this->hasOne(Intake::class);
     }
 }

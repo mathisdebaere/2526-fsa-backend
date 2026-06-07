@@ -14,7 +14,7 @@ class UserController extends Controller
         $data = $request->validate([
             'first_name' => ['sometimes', 'string', 'max:45'],
             'last_name' => ['sometimes', 'string', 'max:45'],
-            'email' => ['sometimes', 'email', 'unique:users,email,' . $user->id],
+            'email' => ['sometimes', 'email', 'unique:users,email,'.$user->id],
             'phone' => ['sometimes', 'string', 'max:45'],
             'date_of_birth' => ['nullable', 'date'],
             'account_status' => ['sometimes', 'in:waiting_for_interview,verified'],
@@ -33,6 +33,7 @@ class UserController extends Controller
 
         return response()->json($user);
     }
+
     public function destroy(User $user)
     {
         $user->delete();

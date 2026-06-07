@@ -12,12 +12,12 @@ class HelpRequestSeeder extends Seeder
     {
         $joris = Client::whereHas('user', function ($query) {
             $query->where('first_name', 'Joris')
-                  ->where('last_name', 'Maervoet');
+                ->where('last_name', 'Maervoet');
         })->first();
 
         $bart = Client::whereHas('user', function ($query) {
             $query->where('first_name', 'Bart')
-                  ->where('last_name', 'Delrue');
+                ->where('last_name', 'Delrue');
         })->first();
 
         HelpRequest::create([

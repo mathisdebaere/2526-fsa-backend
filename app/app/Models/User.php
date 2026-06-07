@@ -25,10 +25,12 @@ class User extends Authenticatable
         'privacy_agreement_timestamp',
         'account_status',
     ];
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
     protected function casts(): array
     {
         return [
@@ -43,6 +45,7 @@ class User extends Authenticatable
     {
         return $value ? Storage::disk('public')->url($value) : null;
     }
+
     public function address()
     {
         return $this->hasOne(Address::class);
@@ -52,6 +55,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class);
     }
+
     public function volunteer()
     {
         return $this->hasOne(Volunteer::class);

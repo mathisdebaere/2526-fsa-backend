@@ -18,25 +18,25 @@ class VolunteerController extends Controller
         $includes = $this->parseIncludes($request, ['user', 'availabilities', 'categories']);
 
         $query = Volunteer::with($includes)
-            ->whereHas('user', fn($q) => $q->where('account_status', 'verified'));
+            ->whereHas('user', fn ($q) => $q->where('account_status', 'verified'));
 
         if ($request->filled('available_on')) {
-            $query->whereHas('availabilities', fn($q) => $q->where('date', $request->available_on));
+            $query->whereHas('availabilities', fn ($q) => $q->where('date', $request->available_on));
         }
 
         if ($request->filled('time_of_day')) {
-            $query->whereHas('availabilities', fn($q) => $q->where('time_of_day', $request->time_of_day));
+            $query->whereHas('availabilities', fn ($q) => $q->where('time_of_day', $request->time_of_day));
         }
 
         if ($request->filled('category_id')) {
-            $query->whereHas('categories', fn($q) => $q->where('help_request_categories.id', $request->category_id));
+            $query->whereHas('categories', fn ($q) => $q->where('help_request_categories.id', $request->category_id));
         }
 
         $user = $request->user();
 
         if ($request->boolean('saved') && $user && $user->role === 'client') {
             $clientId = $user->client->id;
-            $query->whereHas('favoritedByClients', fn($q) => $q->where('client_id', $clientId));
+            $query->whereHas('favoritedByClients', fn ($q) => $q->where('client_id', $clientId));
         }
 
         $paginator = $query->paginate($this->perPage($request));
@@ -45,6 +45,7 @@ class VolunteerController extends Controller
             $favoritedIds = $user->client->favoritedVolunteers()->pluck('volunteers.id')->all();
             $paginator->through(function (Volunteer $volunteer) use ($favoritedIds) {
                 $volunteer->is_favorited = in_array($volunteer->id, $favoritedIds);
+
                 return $volunteer;
             });
         }
@@ -88,7 +89,7 @@ class VolunteerController extends Controller
         }
 
         $data = $request->validate([
-            'date'        => ['required', 'date'],
+            'date' => ['required', 'date'],
             'time_of_day' => ['required', 'in:morning,afternoon,evening'],
         ]);
 
@@ -117,7 +118,7 @@ class VolunteerController extends Controller
         }
 
         $data = $request->validate([
-            'category_ids'   => ['required', 'array'],
+            'category_ids' => ['required', 'array'],
             'category_ids.*' => ['integer', 'exists:help_request_categories,id'],
         ]);
 
@@ -125,6 +126,7 @@ class VolunteerController extends Controller
 
         return response()->json($volunteer->load('categories'));
     }
+
     public function favorite(Request $request, Volunteer $volunteer)
     {
         $client = $request->user()->client;

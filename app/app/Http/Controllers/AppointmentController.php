@@ -59,7 +59,7 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'type'=> ['required', 'in:introduction,assistance'],
+            'type' => ['required', 'in:introduction,assistance'],
             'date' => ['required', 'date'],
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['nullable', 'date_format:H:i', 'after:start_time'],
@@ -117,7 +117,7 @@ class AppointmentController extends Controller
         $appointment->update(['status' => 'completed']);
 
         $review = VolunteerReview::create([
-            'content'=> $data['content'],
+            'content' => $data['content'],
             'appointment_id' => $appointment->id,
             'volunteer_id' => $appointment->volunteer_id,
             'client_id' => $appointment->client_id,

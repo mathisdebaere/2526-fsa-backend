@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class HelpRequest extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'extra_notes',
         'region',

@@ -18,12 +18,14 @@ class VolunteerFoundMail extends Mailable
         public User $client,
         public Appointment $appointment,
     ) {}
+
     public function envelope(): Envelope
     {
         return new Envelope(
             subject: 'Vrijwilliger gevonden voor uw hulpaanvraag!',
         );
     }
+
     public function content(): Content
     {
         return new Content(

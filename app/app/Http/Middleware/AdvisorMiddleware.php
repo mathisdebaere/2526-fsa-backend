@@ -14,6 +14,7 @@ class AdvisorMiddleware
         if (! $user || $user->role !== 'advisor') {
             return response()->json(['message' => 'geen toegang'], 403);
         }
+
         return $next($request);
     }
 }

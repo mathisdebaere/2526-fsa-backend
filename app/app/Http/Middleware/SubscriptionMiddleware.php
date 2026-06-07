@@ -18,7 +18,7 @@ class SubscriptionMiddleware
                 ->exists();
 
             if (! $hasActive) {
-            return response()->json(['message' => 'geen toegang, neem contact op met een adviseur'], 403);
+                return response()->json(['message' => 'geen toegang, neem contact op met een adviseur'], 403);
             }
         }
 

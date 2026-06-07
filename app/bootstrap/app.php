@@ -5,7 +5,6 @@ use App\Http\Middleware\ClientMiddleware;
 use App\Http\Middleware\SubscriptionMiddleware;
 use App\Http\Middleware\VolunteerMiddleware;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,9 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'advisor'      => AdvisorMiddleware::class,
-            'client'       => ClientMiddleware::class,
-            'volunteer'    => VolunteerMiddleware::class,
+            'advisor' => AdvisorMiddleware::class,
+            'client' => ClientMiddleware::class,
+            'volunteer' => VolunteerMiddleware::class,
             'subscription' => SubscriptionMiddleware::class,
         ]);
     })
@@ -39,7 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*')) {
                 return response()->json([
                     'message' => 'validatiefout',
-                    'errors'  => $e->errors(),
+                    'errors' => $e->errors(),
                 ], 422);
             }
         });

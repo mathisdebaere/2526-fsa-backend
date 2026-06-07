@@ -49,7 +49,7 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
             'stream' => [
                 'ssl' => [
-                    'verify_peer'      => false,
+                    'verify_peer' => false,
                     'verify_peer_name' => false,
                 ],
             ],

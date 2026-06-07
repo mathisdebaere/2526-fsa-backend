@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
@@ -27,13 +26,14 @@ class UserFactory extends Factory
             'privacy_agreement' => true,
             'privacy_agreement_timestamp' => now(),
             'account_status' => 'waiting_for_interview',
-         ];
+        ];
     }
 
     public function client(): static
     {
         return $this->state(fn () => ['role' => 'client']);
     }
+
     public function volunteer(): static
     {
         return $this->state(fn () => ['role' => 'volunteer']);
@@ -43,6 +43,7 @@ class UserFactory extends Factory
     {
         return $this->state(fn () => ['role' => 'advisor']);
     }
+
     public function verified(): static
     {
         return $this->state(fn () => ['account_status' => 'verified']);

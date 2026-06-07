@@ -9,14 +9,14 @@ class ClientController extends Controller
 {
     public function index(Request $request)
     {
-        $includes  = $this->parseIncludes($request, ['user', 'subscriptions']);
+        $includes = $this->parseIncludes($request, ['user', 'subscriptions']);
         $isAdvisor = $this->isAdvisor($request);
 
         $paginator = Client::with($includes)
-            ->whereHas('user', fn($q) => $q->where('account_status', 'verified'))
+            ->whereHas('user', fn ($q) => $q->where('account_status', 'verified'))
             ->paginate($this->perPage($request));
 
-        $paginator->through(fn($c) => $this->formatClient($c, $isAdvisor));
+        $paginator->through(fn ($c) => $this->formatClient($c, $isAdvisor));
 
         return response()->json($paginator);
     }
@@ -33,8 +33,8 @@ class ClientController extends Controller
     {
         $rules = [
             'personal_description' => ['nullable', 'string', 'max:500'],
-            'status'               => ['sometimes', 'in:seeking help,not seeking'],
-            'membership_active'    => ['sometimes', 'boolean'],
+            'status' => ['sometimes', 'in:seeking help,not seeking'],
+            'membership_active' => ['sometimes', 'boolean'],
         ];
 
         if ($this->isAdvisor($request)) {
@@ -50,6 +50,7 @@ class ClientController extends Controller
     private function isAdvisor(Request $request): bool
     {
         $user = $request->user();
+
         return $user && $user->role === 'advisor';
     }
 

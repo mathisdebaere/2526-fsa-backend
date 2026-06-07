@@ -28,6 +28,7 @@ class SubscriptionController extends Controller
         if ($request->filled('client_id')) {
             $query->where('client_id', $request->client_id);
         }
+
         return response()->json($query->orderByDesc('start_date')->paginate($this->perPage($request)));
     }
 
@@ -47,6 +48,7 @@ class SubscriptionController extends Controller
 
         return response()->json($subscription->load('client.user'), 201);
     }
+
     public function update(Request $request, Subscription $subscription)
     {
         $data = $request->validate([

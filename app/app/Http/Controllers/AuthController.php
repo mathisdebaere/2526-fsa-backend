@@ -41,13 +41,13 @@ class AuthController extends Controller
         ]);
 
         match ($user->role) {
-            'client'    => Client::create(['user_id' => $user->id]),
+            'client' => Client::create(['user_id' => $user->id]),
             'volunteer' => Volunteer::create(['user_id' => $user->id]),
         };
 
         Intake::create([
             'user_id' => $user->id,
-            'status'  => 'pending',
+            'status' => 'pending',
         ]);
 
         if ($user->email) {
@@ -56,15 +56,15 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Je registratie is succesvol ontvangen, we nemen contact met je op om je intake in te plannen',
-            'user'    => $user,
+            'user' => $user,
         ], 201);
     }
 
     public function login(Request $request)
     {
         $data = $request->validate([
-            'email'    => ['nullable', 'email', 'required_without:phone'],
-            'phone'    => ['nullable', 'string', 'required_without:email'],
+            'email' => ['nullable', 'email', 'required_without:phone'],
+            'phone' => ['nullable', 'string', 'required_without:email'],
             'password' => ['required'],
         ]);
         $user = isset($data['email'])
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
         if ($user->account_status === 'waiting_for_interview') {
             return response()->json([
-                'message'        => 'Je account is nog niet goedgekeurd',
+                'message' => 'Je account is nog niet goedgekeurd',
                 'account_status' => 'waiting_for_interview',
             ], 403);
         }
@@ -86,7 +86,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'user'  => $user,
+            'user' => $user,
             'token' => $token,
         ]);
     }

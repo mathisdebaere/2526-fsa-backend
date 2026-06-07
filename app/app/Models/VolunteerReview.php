@@ -12,6 +12,7 @@ class VolunteerReview extends Model
         'volunteer_id',
         'client_id',
     ];
+
     public function appointment()
     {
         return $this->belongsTo(Appointment::class);

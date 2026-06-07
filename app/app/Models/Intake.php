@@ -19,10 +19,12 @@ class Intake extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function advisor()
     {
         return $this->belongsTo(User::class, 'advisor_id');
     }
+
     public function appointment()
     {
         return $this->belongsTo(Appointment::class);

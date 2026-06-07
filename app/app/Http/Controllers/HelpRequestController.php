@@ -38,6 +38,7 @@ class HelpRequestController extends Controller
         if ($request->filled('category_id')) {
             $query->where('help_request_category_id', $request->category_id);
         }
+
         return response()->json($query->paginate($this->perPage($request)));
     }
 
@@ -77,7 +78,7 @@ class HelpRequestController extends Controller
             'region' => ['sometimes', 'string', 'max:100'],
             'date' => ['sometimes', 'date'],
             'time' => ['sometimes', 'date_format:H:i'],
-            'status'=> ['sometimes', 'in:open,matched,completed,cancelled'],
+            'status' => ['sometimes', 'in:open,matched,completed,cancelled'],
             'help_request_category_id' => ['sometimes', 'exists:help_request_categories,id'],
         ]);
 
@@ -93,7 +94,7 @@ class HelpRequestController extends Controller
         }
         $volunteer = $request->user()->volunteer;
         $appointment = Appointment::create([
-            'type'=> 'assistance',
+            'type' => 'assistance',
             'date' => $helpRequest->date,
             'start_time' => $helpRequest->time,
             'location' => $helpRequest->region,
@@ -104,7 +105,7 @@ class HelpRequestController extends Controller
         ]);
 
         $helpRequest->update([
-            'status'       => 'matched',
+            'status' => 'matched',
             'volunteer_id' => $volunteer->id,
         ]);
 
@@ -121,6 +122,7 @@ class HelpRequestController extends Controller
     public function destroy(HelpRequest $helpRequest)
     {
         $helpRequest->delete();
+
         return response()->noContent();
     }
 }

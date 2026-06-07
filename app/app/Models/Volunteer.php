@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Volunteer extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'personal_description',
         'user_id',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,6 +28,7 @@ class Volunteer extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+
     public function intakes()
     {
         return $this->hasMany(Intake::class);
@@ -35,10 +38,12 @@ class Volunteer extends Model
     {
         return $this->hasMany(VolunteerReview::class);
     }
+
     public function categories()
     {
         return $this->belongsToMany(HelpRequestCategory::class, 'volunteer_help_request_category');
     }
+
     public function favoritedByClients()
     {
         return $this->belongsToMany(Client::class, 'client_favorite_volunteers');

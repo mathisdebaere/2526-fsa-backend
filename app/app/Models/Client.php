@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'personal_description',
         'status',
@@ -15,6 +16,7 @@ class Client extends Model
         'background_notes',
         'user_id',
     ];
+
     protected function casts(): array
     {
         return [
