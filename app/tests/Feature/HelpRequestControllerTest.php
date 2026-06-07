@@ -16,8 +16,11 @@ class HelpRequestControllerTest extends TestCase
     use RefreshDatabase;
 
     protected User $clientUser;
+
     protected Client $client;
+
     protected User $volunteerUser;
+
     protected Volunteer $volunteer;
 
     protected function setUp(): void
@@ -40,7 +43,7 @@ class HelpRequestControllerTest extends TestCase
     {
         $this->giveClientActiveSubscription();
         $ownRequest = HelpRequest::factory()->create(['client_id' => $this->client->id]);
-        HelpRequest::factory()->create(); 
+        HelpRequest::factory()->create();
 
         $response = $this->actingAs($this->clientUser, 'sanctum')->getJson('/api/help-requests');
 
@@ -86,7 +89,7 @@ class HelpRequestControllerTest extends TestCase
     public function test_storing_a_help_request_with_missing_required_fields_returns_422(): void
     {
         $this->giveClientActiveSubscription();
-        $payload = []; 
+        $payload = [];
 
         $response = $this->actingAs($this->clientUser, 'sanctum')->postJson('/api/help-requests', $payload);
         $response->assertStatus(422);
