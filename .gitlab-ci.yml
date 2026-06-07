@@ -45,7 +45,7 @@ unit_test:
 plesk:
   stage: deploy
   only:
-    - main
+    - master
   dependencies: []
   variables:
     PLESK_DIRECTORY: zilverenapi.mathisdebaere.ikdoeict.be
