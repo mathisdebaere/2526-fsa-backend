@@ -20,44 +20,48 @@ class HelpRequestSeeder extends Seeder
                 ->where('last_name', 'Delrue');
         })->first();
 
-        HelpRequest::create([
-            'client_id' => $joris->id,
-            'help_request_category_id' => 1,
-            'region' => 'Gent',
-            'date' => now()->addDays(3),
-            'time' => '14:00:00',
-            'status' => 'open',
-            'extra_notes' => 'Hulp nodig bij computerinstellingen.',
-        ]);
+        if ($joris && $joris->helpRequests()->doesntExist()) {
+            HelpRequest::create([
+                'client_id' => $joris->id,
+                'help_request_category_id' => 1,
+                'region' => 'Gent',
+                'date' => now()->addDays(3),
+                'time' => '14:00:00',
+                'status' => 'open',
+                'extra_notes' => 'Hulp nodig bij computerinstellingen.',
+            ]);
 
-        HelpRequest::create([
-            'client_id' => $joris->id,
-            'help_request_category_id' => 2,
-            'region' => 'Gent',
-            'date' => now()->addDays(5),
-            'time' => '10:00:00',
-            'status' => 'open',
-            'extra_notes' => 'Begeleiding naar afspraak.',
-        ]);
+            HelpRequest::create([
+                'client_id' => $joris->id,
+                'help_request_category_id' => 2,
+                'region' => 'Gent',
+                'date' => now()->addDays(5),
+                'time' => '10:00:00',
+                'status' => 'open',
+                'extra_notes' => 'Begeleiding naar afspraak.',
+            ]);
+        }
 
-        HelpRequest::create([
-            'client_id' => $bart->id,
-            'help_request_category_id' => 1,
-            'region' => 'Brugge',
-            'date' => now()->addWeek(),
-            'time' => '09:30:00',
-            'status' => 'open',
-            'extra_notes' => 'Probleem met smartphone.',
-        ]);
+        if ($bart && $bart->helpRequests()->doesntExist()) {
+            HelpRequest::create([
+                'client_id' => $bart->id,
+                'help_request_category_id' => 1,
+                'region' => 'Brugge',
+                'date' => now()->addWeek(),
+                'time' => '09:30:00',
+                'status' => 'open',
+                'extra_notes' => 'Probleem met smartphone.',
+            ]);
 
-        HelpRequest::create([
-            'client_id' => $bart->id,
-            'help_request_category_id' => 3,
-            'region' => 'Brugge',
-            'date' => now()->addDays(10),
-            'time' => '15:00:00',
-            'status' => 'open',
-            'extra_notes' => 'Hulp bij administratie.',
-        ]);
+            HelpRequest::create([
+                'client_id' => $bart->id,
+                'help_request_category_id' => 3,
+                'region' => 'Brugge',
+                'date' => now()->addDays(10),
+                'time' => '15:00:00',
+                'status' => 'open',
+                'extra_notes' => 'Hulp bij administratie.',
+            ]);
+        }
     }
 }
