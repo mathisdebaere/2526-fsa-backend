@@ -14,7 +14,9 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable()->after('amount');
         });
 
-        DB::statement("ALTER TABLE subscriptions MODIFY COLUMN status ENUM('pending','active','cancelled','expired') DEFAULT 'pending'");
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE subscriptions MODIFY COLUMN status ENUM('pending','active','cancelled','expired') DEFAULT 'pending'");
+        }
     }
 
     public function down(): void
@@ -23,6 +25,8 @@ return new class extends Migration
             $table->dropColumn(['amount', 'paid_at']);
         });
 
-        DB::statement("ALTER TABLE subscriptions MODIFY COLUMN status ENUM('active','cancelled','expired') DEFAULT 'active'");
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE subscriptions MODIFY COLUMN status ENUM('active','cancelled','expired') DEFAULT 'active'");
+        }
     }
 };
